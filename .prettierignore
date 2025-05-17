@@ -1,0 +1,11 @@
+dist
+coverage
+node_modules
+.angular
+.vscode
+.idea
+.git
+*.md
+*.json
+*.yml
+*.yaml 

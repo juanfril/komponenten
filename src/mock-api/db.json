@@ -1,0 +1,63 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Módulo de confort 1K0937086H",
+      "category": "Electrónica",
+      "price": 120,
+      "stock": 15,
+      "description": "Controla funciones eléctricas del vehículo, como ventanas y cierre centralizado.",
+      "compatibleModels": [
+        "Golf VI",
+        "Passat B6"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Módulo puerta derecha 5Q0959592B",
+      "category": "Electrónica",
+      "price": 80,
+      "stock": 10,
+      "description": "Controlador de funciones de la puerta derecha, incluyendo elevalunas y cierre.",
+      "compatibleModels": [
+        "Golf VII",
+        "Tiguan II"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Junta de admisión de motor",
+      "category": "Motor",
+      "price": 5.19,
+      "stock": 50,
+      "description": "Junta de acoplamiento para el sistema de admisión del motor.",
+      "compatibleModels": [
+        "Golf V",
+        "Golf IV"
+      ]
+    },
+    {
+      "name": "Alfombrillas 3D a medida",
+      "category": "Accesorios",
+      "price": 62.5,
+      "stock": 20,
+      "description": "Alfombrillas de goma con diseño 3D, compatibles con Volkswagen Caddy 5.",
+      "compatibleModels": [
+        "Caddy 5"
+      ],
+      "id": "4"
+    },
+    {
+      "id": "5",
+      "name": "Deflectores de ventana lateral",
+      "category": "Accesorios",
+      "price": 47.59,
+      "stock": 25,
+      "description": "Protectores contra el clima y la lluvia para ventanas laterales.",
+      "compatibleModels": [
+        "Golf VII",
+        "Passat B7"
+      ]
+    }
+  ]
+}

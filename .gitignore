@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 
 # IDEs and editors
+.editorconfig
 .idea/
 .project
 .classpath
@@ -40,3 +41,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
