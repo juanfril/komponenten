@@ -1,12 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CompatibleModels, Product, ProductCategory } from '@app/models/product';
 import { ProductService } from '@app/services/product.service';
+import { AlertComponent } from '@app/shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-product-form',
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, AlertComponent],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css',
 })
@@ -19,6 +20,9 @@ export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   isEditMode = false;
   productId?: string;
+
+  successMessage = signal<string | null>(null);
+  serviceStatus = this.productService.status;
 
   productCategories = Object.values(ProductCategory);
   compatibleModelOptions = Object.values(CompatibleModels);
@@ -102,10 +106,23 @@ export class ProductFormComponent implements OnInit {
         id: this.productId,
       };
       this.productService.updateProduct(updatedProduct);
+      this.successMessage.set(`Product "${updatedProduct.name}" updated successfully`);
     } else {
       this.productService.createProduct(formValue as Product);
+      this.successMessage.set(`Product "${formValue.name}" created successfully`);
     }
 
-    this.router.navigate(['/products']);
+    // Redirigir después de 2 segundos
+    setTimeout(() => {
+      this.router.navigate(['/products']);
+    }, 2000);
+  }
+
+  clearSuccess(): void {
+    this.successMessage.set(null);
+  }
+
+  clearError(): void {
+    this.productService.clearError();
   }
 }

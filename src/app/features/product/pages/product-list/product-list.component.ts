@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit {
   sortDirection = signal<'asc' | 'desc'>('asc');
 
   searchTerm = signal('');
+  confirmDeleteMessage = signal<{ id: string; name: string } | null>(null);
+  successMessage = signal<string | null>(null);
 
   serviceStatus = computed(() => this.productService.status());
 
@@ -87,9 +89,32 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(id: string): void {
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(id);
+    const product = this.productService.getProductById(id);
+    if (product) {
+      this.confirmDeleteMessage.set({ id: product.id, name: product.name });
     }
+  }
+
+  confirmDelete(): void {
+    const productToDelete = this.confirmDeleteMessage();
+    if (productToDelete) {
+      this.productService.deleteProduct(productToDelete.id);
+      this.successMessage.set(`Product "${productToDelete.name}" deleted successfully`);
+      this.confirmDeleteMessage.set(null);
+
+      // Limpiar el mensaje de éxito después de 2 segundos
+      setTimeout(() => {
+        this.successMessage.set(null);
+      }, 2000);
+    }
+  }
+
+  cancelDelete(): void {
+    this.confirmDeleteMessage.set(null);
+  }
+
+  clearSuccess(): void {
+    this.successMessage.set(null);
   }
 
   clearError(): void {

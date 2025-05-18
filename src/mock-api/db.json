@@ -58,6 +58,15 @@
         "Golf VII",
         "Passat B7"
       ]
+    },
+    {
+      "id": "0c4c",
+      "name": "another test",
+      "category": "Electrónica",
+      "price": 5,
+      "stock": 10,
+      "description": "some description",
+      "compatibleModels": []
     }
   ]
 }
