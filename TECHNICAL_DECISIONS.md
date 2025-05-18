@@ -79,6 +79,32 @@ Benefits of zoneless change detection:
 3. Better integration with signals
 4. Reduced bundle size by eliminating Zone.js
 
+### Lazy Loading and Code Splitting
+
+The application implements lazy loading for feature modules to improve performance:
+
+```typescript
+// app.routes.ts
+export const routes: Routes = [
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  {
+    path: 'products',
+    loadChildren: () => import('./features/product/product.routes')
+      .then(m => m.PRODUCT_ROUTES)
+  },
+  { path: '**', redirectTo: '/products' },
+];
+```
+
+Benefits of lazy loading:
+1. **Reduced initial bundle size**: Only the core application code is loaded on startup
+2. **Faster initial load time**: Less code to download and parse when the application first loads
+3. **Automatic code splitting**: Angular's build system automatically creates separate chunks for lazy-loaded routes
+4. **On-demand loading**: Feature modules are loaded only when the user navigates to their routes
+5. **Better resource utilization**: Memory and processing resources are used more efficiently
+
+This approach is particularly beneficial for larger applications with multiple features, as it allows the application to remain responsive even as it grows in complexity.
+
 ## State Management
 
 ### Angular Signals
@@ -253,6 +279,64 @@ Several techniques are used to optimize performance:
 3. **Memoization**: Computed values are cached to avoid unnecessary recalculations
 4. **Optimized Rendering**: Using the `track` expression in `@for` blocks to improve rendering performance
 5. **Zoneless Change Detection**: Experimental feature to improve performance
+
+## Error Handling with Signals
+
+The application implements a robust error handling strategy using Angular Signals:
+
+### Centralized Error Management
+
+Services maintain their own error state using signals:
+
+```typescript
+// In the ProductService
+private _status = signal<ServiceStatus>({ loading: false, error: null });
+status = computed(() => this._status());
+```
+
+This approach provides several benefits:
+
+1. **Reactive Error Handling**: Components can reactively respond to error states
+2. **Contextual Error Messages**: Error messages are generated based on HTTP status codes
+3. **Loading State Management**: Loading states are managed alongside error states
+4. **User Feedback**: The UI can show appropriate loading indicators and error messages
+
+### Error Component with Accessibility
+
+A reusable AlertComponent handles error display:
+
+```typescript
+@Component({
+  selector: 'app-alert',
+  template: `
+    @if (message()) {
+      <div 
+        [class]="alertClasses()"
+        role="alert"
+        aria-live="assertive"
+      >
+        <!-- Alert content -->
+      </div>
+    }
+  `
+})
+export class AlertComponent {
+  type = input<AlertType>('error');
+  message = model<string | null>(null);
+  dismissible = input<boolean>(true);
+  dismissed = output<void>();
+}
+```
+
+Key features of the error handling system:
+
+1. **ARIA Attributes**: Proper accessibility attributes (`role="alert"`, `aria-live="assertive"`)
+2. **Visual Differentiation**: Different styles for different alert types (error, success, warning)
+3. **Dismissible Alerts**: Users can dismiss alerts when appropriate
+4. **Rich Error Information**: Detailed error messages based on the specific error condition
+5. **Recovery Options**: UI provides retry mechanisms for connection errors
+
+This approach ensures a great user experience even when errors occur, and follows modern best practices for error handling in Angular applications.
 
 ## Future Improvements
 

@@ -1,13 +1,14 @@
 import { Component, OnInit, Signal, computed, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AlertComponent } from '@app/shared/components/alert/alert.component';
 import { Product } from '@app/models/product';
 import { ProductService } from '@app/services/product.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, AlertComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
@@ -19,6 +20,9 @@ export class ProductListComponent implements OnInit {
   sortDirection = signal<'asc' | 'desc'>('asc');
 
   searchTerm = signal('');
+
+  // Status de carga y error desde el servicio
+  serviceStatus = computed(() => this.productService.status());
 
   products: Signal<Product[]> = computed(() => {
     return this.filterAndSortProducts(
@@ -87,5 +91,13 @@ export class ProductListComponent implements OnInit {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productService.deleteProduct(id);
     }
+  }
+
+  clearError(): void {
+    this.productService.clearError();
+  }
+
+  retryConnection(): void {
+    this.productService.getProducts();
   }
 }

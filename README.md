@@ -2,7 +2,7 @@
 
 A product management application built with Angular 19, featuring a responsive UI with Tailwind CSS and following clean architecture principles.
 
-**Author:** Juan Frias
+**Author:** Juan Fco. Losa
 
 ## Project Overview
 
@@ -19,7 +19,7 @@ This application allows users to manage products through a clean and intuitive i
 ## Technical Stack
 
 - **Framework**: Angular 19
-- **Package Manager**: Bun
+- **Package Manager**: pnpm
 - **CSS Framework**: Tailwind CSS 4
 - **State Management**: Angular Signals
 - **HTTP Client**: Angular's built-in HttpClient with fetch
@@ -35,6 +35,7 @@ This project showcases several modern Angular 19 features:
 3. **Zoneless Change Detection**: Experimental zoneless change detection for better performance
 4. **Standalone Components**: All components are standalone
 5. **Typed Forms**: Fully typed reactive forms
+6. **Lazy Loading**: Implemented route-level lazy loading for better performance and code splitting
 
 ## Clean Architecture
 
@@ -66,15 +67,15 @@ src/
 1. Clone the repository
 2. Install dependencies:
    ```
-   bun install
+   pnpm install
    ```
 3. Start the development server:
    ```
-   bun run start
+   pnpm run start
    ```
 4. Start the mock API server:
    ```
-   bun run api
+   pnpm run api
    ```
 5. Open your browser and navigate to `http://localhost:4200`
 
@@ -141,10 +142,9 @@ The AI suggestions were integrated with my own input by:
 
 ## Future Improvements
 
-- Add unit and integration tests
+- Upgrade de coverage coverture for unit test
 - Implement authentication and authorization
 - Add pagination for the product list
-- Create a more sophisticated filtering system
 - Implement caching for better performance
 
 ## Technical Decisions
