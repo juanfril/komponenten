@@ -21,7 +21,6 @@ export class ProductListComponent implements OnInit {
 
   searchTerm = signal('');
 
-  // Status de carga y error desde el servicio
   serviceStatus = computed(() => this.productService.status());
 
   products: Signal<Product[]> = computed(() => {
